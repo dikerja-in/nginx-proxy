@@ -1,0 +1,21 @@
+version: "3.9"
+
+services:
+    nginx-proxy:
+        container_name: nginx-proxy
+        image: jwilder/nginx-proxy:alpine
+        restart: always
+        environment:
+            HTTPS_METHOD: noredirect
+        ports:
+            - 80:80
+            - 443:443
+        volumes:
+            - /var/run/docker.sock:/tmp/docker.sock:ro
+            - ./certs:/etc/nginx/certs
+        networks:
+            - nginx-proxy
+
+networks:
+    nginx-proxy:
+        name: nginx-proxy
